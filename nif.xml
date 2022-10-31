@@ -117,12 +117,14 @@
         <verexpr token="#NI_BS_LT_FO3#" string="(#BSVER# #LT# 34)">All NI + BS before Fallout 3.</verexpr>
         <verexpr token="#NI_BS_LTE_FO3#" string="(#BSVER# #LTE# 34)">All NI + BS until Fallout 3.</verexpr>
         <verexpr token="#NI_BS_LT_SSE#" string="(#BSVER# #LT# 100)">All NI + BS before SSE.</verexpr>
+        <verexpr token="#NI_BS_LTE_SSE#" string="(#BSVER# #LTE# 100)">All NI + BS before SSE.</verexpr>
         <verexpr token="#NI_BS_LT_FO4#" string="(#BSVER# #LT# 130)">All NI + BS before Fallout 4.</verexpr>
         <verexpr token="#NI_BS_LTE_FO4#" string="(#BSVER# #LTE# 139)">All NI + BS until Fallout 4.</verexpr>
         <verexpr token="#BS_GT_FO3#" string="(#BSVER# #GT# 34)">Skyrim, SSE, and Fallout 4</verexpr>
         <verexpr token="#BS_GTE_FO3#" string="(#BSVER# #GTE# 34)">FO3 and later.</verexpr>
         <verexpr token="#BS_GTE_SKY#" string="(#BSVER# #GTE# 83)">Skyrim and later.</verexpr>
         <verexpr token="#BS_GTE_SSE#" string="(#BSVER# #GTE# 100)">SSE and later.</verexpr>
+        <verexpr token="#BS_GTE_FO4#" string="(#BSVER# #GTE# 130)">Fallout 4 and later.</verexpr>
         <verexpr token="#BS_SSE#" string="(#BSVER# #EQ# 100)">SSE only.</verexpr>
         <verexpr token="#BS_FO4#" string="(#BSVER# #EQ# 130)">Fallout 4 strictly, excluding stream 132 and 139 in dev files.</verexpr>
         <verexpr token="#BS_FO4_2#" string="((#BSVER# #GTE# 130) #AND# (#BSVER# #LTE# 139))">Fallout 4/76 including dev files.</verexpr>
@@ -151,6 +153,7 @@
         <verset token="#F76#" string="V20_2_0_7_F76" />
         <verset token="#FO3_AND_LATER#" string="V20_0_0_4__11 V20_2_0_7__11_1 V20_2_0_7__11_2 V20_2_0_7__11_3 V20_2_0_7__11_4 V20_2_0_7__11_5 V20_2_0_7__11_6 V20_2_0_7__11_7 V20_2_0_7__11_8 V20_2_0_7_FO3 V20_2_0_7_SKY V20_2_0_7_SSE V20_2_0_7_FO4 V20_2_0_7_F76" />
         <verset token="#SKY_AND_LATER#" string="V20_2_0_7_SKY V20_2_0_7_SSE V20_2_0_7_FO4 V20_2_0_7_F76" />
+        <verset token="#FO4_AND_LATER#" string="V20_2_0_7_FO4 V20_2_0_7_F76" />
     </token>
 
     <token name="default" attrs="default">
@@ -630,6 +633,165 @@
         <option value="3974071006" name="SKY_HAV_MAT_UNKNOWN_3974071006" />
         <option value="3941234649" name="SKY_HAV_MAT_UNKNOWN_3941234649">tfxsteelswordbloody</option>
         <option value="1820198263" name="SKY_HAV_MAT_UNKNOWN_1820198263">steelgreatsword</option>
+    </enum>
+
+    <enum name="Fallout4HavokMaterial" storage="uint" versions="#F04_AND_LATER#">
+        Bethesda Havok. Material descriptor for a Havok shape in Fallout4.
+        <option value="2216694923" name="ActorArmored">ActorArmored</option>
+        <option value="4288341836" name="ActorArmoredCrab">ActorArmoredCrab</option>
+        <option value="3824112521" name="ActorGeneric">ActorGeneric</option>
+        <option value="2377431615" name="ActorGhost">ActorGhost</option>
+        <option value="1540336298" name="ActorGlowing">ActorGlowing</option>
+        <option value="1395526401" name="ActorInsect">ActorInsect</option>
+        <option value="4198749890" name="ActorInsectSmall">ActorInsectSmall</option>
+        <option value="1317396055" name="ActorMetal">ActorMetal</option>
+        <option value="2029661776" name="ActorMetalArmoredPower">ActorMetalArmoredPower</option>
+        <option value="1526052914" name="ActorMetalLarge">ActorMetalLarge</option>
+        <option value="1994095519" name="ActorMetalSmall">ActorMetalSmall</option>
+        <option value="2215730879" name="ActorSkeleton">ActorSkeleton</option>
+        <option value="1423343525" name="ActorSkin">ActorSkin</option>
+        <option value="1124183901" name="ActorSkinLarge">ActorSkinLarge</option>
+        <option value="1865379056" name="ActorSkinSmall">ActorSkinSmall</option>
+        <option value="748236019" name="ArmorHeavy">ArmorHeavy</option>
+        <option value="1035078235" name="ArmorLight">ArmorLight</option>
+        <option value="504699171" name="Arrow">Arrow</option>
+        <option value="26782757" name="Axe1Hand">Axe1Hand</option>
+        <option value="2474963416" name="Basket">Basket</option>
+        <option value="3936451629" name="Book">Book</option>
+        <option value="493553910" name="Bottle">Bottle</option>
+        <option value="172611777" name="BottleSmall">BottleSmall</option>
+        <option value="4050795553" name="Brick">Brick</option>
+        <option value="1998647255" name="CHAIN">CHAIN</option>
+        <option value="4028041609" name="Carpet">Carpet</option>
+        <option value="885278459" name="CeramicMedium">CeramicMedium</option>
+        <option value="3839073443" name="Cloth">Cloth</option>
+        <option value="630687820" name="ClothCushion">ClothCushion</option>
+        <option value="1949124673" name="Coin">Coin</option>
+        <option value="911716378" name="Concrete">Concrete</option>
+        <option value="1439425931" name="ConcreteStairs">ConcreteStairs</option>
+        <option value="2608397368" name="DLC03MaterialMetalBearTrap">DLC03MaterialMetalBearTrap</option>
+        <option value="2504525426" name="DLC03MaterialVRFloor">DLC03MaterialVRFloor</option>
+        <option value="1905728123" name="DLC04_Material_ArcadeSledBall_Ball">DLC04_Material_ArcadeSledBall_Ball</option>
+        <option value="1066046129" name="DLC04_Material_ArcadeSledBall_Track">DLC04_Material_ArcadeSledBall_Track</option>
+        <option value="4162286078" name="DLC04_Material_RubberBasketBall">DLC04_Material_RubberBasketBall</option>
+        <option value="1499295757" name="DLC05MaterialBallTrackBall">DLC05MaterialBallTrackBall</option>
+        <option value="2420474045" name="DLC05MaterialBallTrackMetal">DLC05MaterialBallTrackMetal</option>
+        <option value="1825241013" name="DLC05MaterialBallTrackMetalFunnel">DLC05MaterialBallTrackMetalFunnel</option>
+        <option value="301080923" name="DLC05MaterialBallTrackWood">DLC05MaterialBallTrackWood</option>
+        <option value="3106094762" name="Dirt">Dirt</option>
+        <option value="1340314491" name="DirtStairs">DirtStairs</option>
+        <option value="3739830338" name="GLASS">GLASS</option>
+        <option value="186875565" name="Generic">Generic</option>
+        <option value="2534329404" name="GlassStairs">GlassStairs</option>
+        <option value="1848600814" name="Grass">Grass</option>
+        <option value="2926148967" name="GrassStairs">GrassStairs</option>
+        <option value="428587608" name="Gravel">Gravel</option>
+        <option value="873356572" name="Ice">Ice</option>
+        <option value="3354927426" name="Insect Wing">Insect Wing</option>
+        <option value="668408902" name="Insect">Insect</option>
+        <option value="3877172525" name="InsectFloor">InsectFloor</option>
+        <option value="3103724712" name="MaterialActorSynthGen1">MaterialActorSynthGen1</option>
+        <option value="2052480620" name="MaterialBaseball">MaterialBaseball</option>
+        <option value="3504249533" name="MaterialBodyBone">MaterialBodyBone</option>
+        <option value="2716293208" name="MaterialCeramicCoffeeMug">MaterialCeramicCoffeeMug</option>
+        <option value="774657257" name="MaterialClipboard">MaterialClipboard</option>
+        <option value="3184958832" name="MaterialGroundDirtLeaves">MaterialGroundDirtLeaves</option>
+        <option value="1603170414" name="MaterialGroundGrassBush">MaterialGroundGrassBush</option>
+        <option value="3899176889" name="MaterialGroundMetalA">MaterialGroundMetalA</option>
+        <option value="2908408722" name="MaterialGroundTileVinyl">MaterialGroundTileVinyl</option>
+        <option value="4294094670" name="MaterialGroundTileVinylSanctuaryHills">MaterialGroundTileVinylSanctuaryHills</option>
+        <option value="2993292432" name="MaterialMetalAuto">MaterialMetalAuto</option>
+        <option value="1973249018" name="MaterialMetalBucket">MaterialMetalBucket</option>
+        <option value="2674265083" name="MaterialMetalCanTin">MaterialMetalCanTin</option>
+        <option value="1543121159" name="MaterialMetalChairFolding">MaterialMetalChairFolding</option>
+        <option value="4005220376" name="MaterialMetalGasLine">MaterialMetalGasLine</option>
+        <option value="3736463754" name="MaterialMetalGateVault">MaterialMetalGateVault</option>
+        <option value="4126576412" name="MaterialMetalLunchbox">MaterialMetalLunchbox</option>
+        <option value="2963595456" name="MaterialMetalShoppingCart">MaterialMetalShoppingCart</option>
+        <option value="1269739668" name="MaterialMetalSign">MaterialMetalSign</option>
+        <option value="2988283556" name="MaterialMetalStairs">MaterialMetalStairs</option>
+        <option value="327411453" name="MaterialMetalTray">MaterialMetalTray</option>
+        <option value="672193313" name="MaterialMetalVertibirdChassisLarge">MaterialMetalVertibirdChassisLarge</option>
+        <option value="71178380" name="MaterialMetalVertibirdChassisSmall">MaterialMetalVertibirdChassisSmall</option>
+        <option value="2507079709" name="MaterialMetalWeight">MaterialMetalWeight</option>
+        <option value="2605587041" name="MaterialOtherBone">MaterialOtherBone</option>
+        <option value="3105913924" name="MaterialPaperBoxCardboard">MaterialPaperBoxCardboard</option>
+        <option value="3218036415" name="MaterialPaperBoxSmall">MaterialPaperBoxSmall</option>
+        <option value="1447538522" name="MaterialPaperMagazine">MaterialPaperMagazine</option>
+        <option value="69730436" name="MaterialPlasticBin">MaterialPlasticBin</option>
+        <option value="293847076" name="MaterialPlasticBowlingBall">MaterialPlasticBowlingBall</option>
+        <option value="657718602" name="MaterialPlasticLarge">MaterialPlasticLarge</option>
+        <option value="747607327" name="MaterialPlasticTrafficCone">MaterialPlasticTrafficCone</option>
+        <option value="3114373106" name="MaterialRubberBall">MaterialRubberBall</option>
+        <option value="1868386674" name="MaterialRubberTire">MaterialRubberTire</option>
+        <option value="1887003409" name="MaterialStoneSubwayPillarLarge">MaterialStoneSubwayPillarLarge</option>
+        <option value="1138619501" name="MaterialSubwayGate">MaterialSubwayGate</option>
+        <option value="976632406" name="MaterialWeaponBlockBladeMedium">MaterialWeaponBlockBladeMedium</option>
+        <option value="2262304622" name="MaterialWeaponBlockBladeSmall">MaterialWeaponBlockBladeSmall</option>
+        <option value="3626158119" name="MaterialWeaponCasing">MaterialWeaponCasing</option>
+        <option value="3207358594" name="MaterialWeaponCasingMinigun">MaterialWeaponCasingMinigun</option>
+        <option value="1501436081" name="MaterialWeaponCasingPistol">MaterialWeaponCasingPistol</option>
+        <option value="3485918636" name="MaterialWeaponCasingRifle">MaterialWeaponCasingRifle</option>
+        <option value="3699571270" name="MaterialWeaponCasingShotgun">MaterialWeaponCasingShotgun</option>
+        <option value="3284711549" name="MaterialWeaponMetalBlade1Hand">MaterialWeaponMetalBlade1Hand</option>
+        <option value="361241712" name="MaterialWeaponMetalBlade1HandSmall">MaterialWeaponMetalBlade1HandSmall</option>
+        <option value="2973353357" name="MaterialWeaponMetalGrenade">MaterialWeaponMetalGrenade</option>
+        <option value="450934209" name="MaterialWeaponMetalMine">MaterialWeaponMetalMine</option>
+        <option value="4146539321" name="MaterialWeaponPistol">MaterialWeaponPistol</option>
+        <option value="1201612612" name="MaterialWeaponRifle">MaterialWeaponRifle</option>
+        <option value="1185452450" name="MaterialWeaponRifleLarge">MaterialWeaponRifleLarge</option>
+        <option value="2853713344" name="MaterialWoodBoard">MaterialWoodBoard</option>
+        <option value="2219131696" name="MaterialWoodBroom">MaterialWoodBroom</option>
+        <option value="341181474" name="MaterialWoodCrate">MaterialWoodCrate</option>
+        <option value="2900281814" name="Meat">Meat</option>
+        <option value="104858580" name="Metal">Metal</option>
+        <option value="2050332274" name="MetalBarrel">MetalBarrel</option>
+        <option value="3378519871" name="MetalBarrelTrashCan">MetalBarrelTrashCan</option>
+        <option value="2002199878" name="MetalBarrelTrashCanOffice">MetalBarrelTrashCanOffice</option>
+        <option value="4094939507" name="MetalHeavy">MetalHeavy</option>
+        <option value="2993325253" name="MetalHollow">MetalHollow</option>
+        <option value="3845715931" name="MetalLight">MetalLight</option>
+        <option value="706373264" name="MetalSolid">MetalSolid</option>
+        <option value="3236651581" name="MetalStairs">MetalStairs</option>
+        <option value="1486385281" name="Mud">Mud</option>
+        <option value="2974920155" name="Organic">Organic</option>
+        <option value="1322093133" name="OrganicLarge">OrganicLarge</option>
+        <option value="3028667025" name="OtherParent">OtherParent</option>
+        <option value="2285410059" name="Paper">Paper</option>
+        <option value="2113564165" name="Plastic">Plastic</option>
+        <option value="4013367152" name="PotsPans">PotsPans</option>
+        <option value="2168343821" name="Sand">Sand</option>
+        <option value="1745686114" name="Sandbag">Sandbag</option>
+        <option value="2925203401" name="ShieldHeavy">ShieldHeavy</option>
+        <option value="3211798881" name="ShieldLight">ShieldLight</option>
+        <option value="591247106" name="Skin">Skin</option>
+        <option value="398949039" name="Snow">Snow</option>
+        <option value="950426180" name="SnowStairs">SnowStairs</option>
+        <option value="3741512247" name="Stone">Stone</option>
+        <option value="1782067423" name="StoneAsStairs">StoneAsStairs</option>
+        <option value="2276150428" name="StoneBoulderLarge">StoneBoulderLarge</option>
+        <option value="3251579835" name="StoneBoulderMedium">StoneBoulderMedium</option>
+        <option value="2877656881" name="StoneBoulderSmall">StoneBoulderSmall</option>
+        <option value="1413383033" name="StoneBroken">StoneBroken</option>
+        <option value="811073006" name="StoneBrokenStairs">StoneBrokenStairs</option>
+        <option value="2253994566" name="StoneHeavy">StoneHeavy</option>
+        <option value="2519395573" name="StoneStairs">StoneStairs</option>
+        <option value="500811281" name="WOOD">WOOD</option>
+        <option value="3895166727" name="Ward">Ward</option>
+        <option value="2459239824" name="WaterPuddle">WaterPuddle</option>
+        <option value="3639674437" name="Weapon">Weapon</option>
+        <option value="694643242" name="WeaponBlade2Hand">WeaponBlade2Hand</option>
+        <option value="1923703986" name="WeaponBlockBlunt">WeaponBlockBlunt</option>
+        <option value="4207714651" name="WeaponBlunt1Hand">WeaponBlunt1Hand</option>
+        <option value="3178027915" name="WeaponBlunt2Hand">WeaponBlunt2Hand</option>
+        <option value="238888479" name="WeaponBowsStaves">WeaponBowsStaves</option>
+        <option value="3934839107" name="Web">Web</option>
+        <option value="3793849624" name="WoodAsStairs">WoodAsStairs</option>
+        <option value="3403586657" name="WoodBarrel">WoodBarrel</option>
+        <option value="3481395209" name="WoodHeavy">WoodHeavy</option>
+        <option value="3735733921" name="WoodLight">WoodLight</option>
+        <option value="1879074862" name="WoodStairs">WoodStairs</option>
+        <option value="2861019322" name="debug">debug</option>
     </enum>
 
     <enum name="OblivionLayer" storage="byte" versions="#BETHESDA#">
@@ -2271,7 +2433,8 @@
         <field name="Unknown Int" type="uint" until="10.0.1.2" />
         <field name="Material" suffix="OB" type="OblivionHavokMaterial" until="20.0.0.5" vercond="#BSVER# #LT# 16">The material of the shape.</field>
         <field name="Material" suffix="FO" type="Fallout3HavokMaterial" vercond="(#VER# == 20.2.0.7) #AND# #NI_BS_LTE_FO3#">The material of the shape.</field>
-        <field name="Material" suffix="SK" type="SkyrimHavokMaterial" vercond="(#VER# == 20.2.0.7) #AND# #BS_GT_FO3#">The material of the shape.</field>
+        <field name="Material" suffix="SK" type="SkyrimHavokMaterial" vercond="(#VER# == 20.2.0.7) #AND# #NI_BS_LTE_SSE#">The material of the shape.</field>
+        <field name="Material" suffix="FO4" type="Fallout4HavokMaterial" vercond="(#VER# == 20.2.0.7) #AND# #BS_GTE_FO4#">The material of the shape.</field>
     </struct>
 
     <struct name="hkSubPartData" module="BSHavok" versions="#BETHESDA#">
