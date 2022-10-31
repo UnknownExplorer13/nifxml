@@ -51,8 +51,9 @@ This file incorporates work covered by the following copyright and permission no
 """
 
 from __future__ import unicode_literals
+from typing import Callable, Optional
 
-from xml.dom.minidom import Node, parse
+from xml.dom.minidom import Attr, Document, Element, Node, parse
 
 import os
 import re
@@ -72,24 +73,26 @@ XML_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../nif.
 TYPES_NATIVE = {'TEMPLATE': 'T'}
 TYPES_BASIC = {}
 TYPES_ENUM = {}
-TYPES_FLAG = {}
+TYPES_BITFLAG = {}
 TYPES_STRUCT = {}
-TYPES_BLOCK = {}
+TYPES_NIOBJECT = {}
 TYPES_VERSION = {}
+
 
 NAMES_BASIC = []
 NAMES_STRUCT = []
 NAMES_ENUM = []
-NAMES_FLAG = []
-NAMES_BLOCK = []
+NAMES_BITFLAG = []
+NAMES_NIOBJECT = []
 NAMES_VERSION = []
 
-__all__ = ['TYPES_VERSION', 'TYPES_BASIC', 'TYPES_BLOCK', 'TYPES_STRUCT', 'TYPES_ENUM', 'TYPES_FLAG', 'TYPES_NATIVE',
-           'NAMES_VERSION', 'NAMES_BASIC', 'NAMES_BLOCK', 'NAMES_STRUCT', 'NAMES_ENUM', 'NAMES_FLAG']
+
+__all__ = ['TYPES_VERSION', 'TYPES_BASIC', 'TYPES_NIOBJECT', 'TYPES_STRUCT', 'TYPES_ENUM', 'TYPES_BITFLAG', 'TYPES_NATIVE',
+           'NAMES_VERSION', 'NAMES_BASIC', 'NAMES_NIOBJECT', 'NAMES_STRUCT', 'NAMES_ENUM', 'NAMES_BITFLAG']
 
 
 @export
-def class_name(name_in):  # type: (str) -> str
+def class_name(name_in: str) -> str:
     """
     Formats a valid C++ class name from the name format used in the XML.
     """
@@ -100,31 +103,9 @@ def class_name(name_in):  # type: (str) -> str
     except KeyError:
         return name_in.replace(' ', '_').replace(":", "_")
 
-    if name_in is None:
-        return None
-
-    try:
-        return TYPES_NATIVE[name_in]
-    except KeyError:
-        pass
-
-    if name_in == 'TEMPLATE':
-        return 'T'
-    name_out = ''
-    for i, char in enumerate(name_in):
-        if char.isupper():
-            if i > 0:
-                name_out += '_'
-            name_out += char.lower()
-        elif char.islower() or char.isdigit():
-            name_out += char
-        else:
-            name_out += '_'
-    return name_out
-
 
 @export
-def define_name(name_in):  # type: (str) -> str
+def define_name(name_in: str) -> str:
     """
     Formats an all-uppercase version of the name for use in C++ defines.
     """
@@ -144,7 +125,7 @@ def define_name(name_in):  # type: (str) -> str
 
 
 @export
-def member_name(name_in):  # type: (str) -> str
+def member_name(name_in: str) -> str:
     """
     Formats a version of the name for use as a C++ member variable.
     """
@@ -170,7 +151,7 @@ def member_name(name_in):  # type: (str) -> str
 
 
 @export
-def version2number(s):  # type: (str) -> int
+def version2number(s: str) -> int:
     """
     Translates a legible NIF version number to the packed-byte numeric representation.
     For example, "10.0.1.0" is translated to 0x0A000100.
@@ -201,7 +182,7 @@ def version2number(s):  # type: (str) -> int
 
 
 @export
-def scanBrackets(expr_str, from_index=0):  # type: (str, int) -> Tuple[int, int]
+def scanBrackets(expr_str: str, from_index: int = 0) -> tuple[int, int]:
     """Looks for matching brackets.
 
     >>> scanBrackets('abcde')
@@ -234,7 +215,6 @@ def scanBrackets(expr_str, from_index=0):  # type: (str, int) -> Tuple[int, int]
             raise ValueError("expression syntax error (non-matching brackets?)")
     return (startpos, endpos)
 
-
 class Expression:
     """This class represents an expression.
 
@@ -265,7 +245,7 @@ class Expression:
     """
     operators = ['==', '!=', '>=', '<=', '&&', '||', '&', '|', '-', '+', '>', '<', '/', '*']
 
-    def __init__(self, expr_str, name_filter=None):
+    def __init__(self, expr_str: str, name_filter: Callable[[str],str] = None):
         self._code = expr_str
         left, self._op, right = self._partition(expr_str)
         self._left = self._parse(left, name_filter)
@@ -488,7 +468,7 @@ class Expression:
                 return ''
             if isinstance(self.lhs, int):
                 return self.lhs
-            elif self.lhs in TYPES_BLOCK:
+            elif self.lhs in TYPES_NIOBJECT:
                 return 'IsDerivedType(%s::TYPE)' % self.lhs
             else:
                 return prefix + (name_filter(self.lhs) if name_filter else self.lhs)
@@ -496,7 +476,7 @@ class Expression:
             lhs = self.lhs
             if isinstance(lhs, Expression):
                 lhs = lhs.code(prefix, True, name_filter)
-            elif lhs in TYPES_BLOCK:
+            elif lhs in TYPES_NIOBJECT:
                 lhs = 'IsDerivedType(%s::TYPE)' % lhs
             elif lhs and not lhs.isdigit() and not lhs.startswith('0x'):
                 lhs = prefix + (name_filter(lhs) if name_filter else lhs)
@@ -505,7 +485,7 @@ class Expression:
             lhs = self.lhs
             if isinstance(lhs, Expression):
                 lhs = lhs.code(prefix, True, name_filter)
-            elif lhs in TYPES_BLOCK:
+            elif lhs in TYPES_NIOBJECT:
                 lhs = 'IsDerivedType(%s::TYPE)' % lhs
             elif lhs and not lhs.isdigit() and not lhs.startswith('0x'):
                 lhs = prefix + (name_filter(lhs) if name_filter else lhs)
@@ -513,7 +493,7 @@ class Expression:
             rhs = self.rhs
             if isinstance(rhs, Expression):
                 rhs = rhs.code(prefix, True, name_filter)
-            elif rhs in TYPES_BLOCK:
+            elif rhs in TYPES_NIOBJECT:
                 rhs = 'IsDerivedType(%s::TYPE)' % rhs
             elif rhs and not rhs.isdigit() and not rhs.startswith('0x'):
                 rhs = prefix + (name_filter(rhs) if name_filter else rhs)
@@ -555,129 +535,96 @@ class Expr(Expression):
     @ivar rhs: The right hand side of the expression?
     """
 
-    def __init__(self, n, name_filter=None):
-        """
-        This constructor takes the expression in the form of a string and tokenizes it into left-hand side,
-        operator, right hand side, and something called clhs.
-        @param n: The expression to tokenize.
-        @type n: string
-        """
-        Expression.__init__(self, n, name_filter)
+    def __init__(self, expr_str: str , name_filter=None):
+        Expression.__init__(self, expr_str, name_filter)
 
-    def code(self, prefix='', brackets=True, name_filter=None):
+    def code(self, prefix: str = '', brackets=True, name_filter: Callable[[str],str]=None):
         if not name_filter:
             name_filter = member_name
         return Expression.code(self, prefix, brackets, name_filter)
 
 
 class Option:
-    """
-    This class represents an option in an option list.
-    @ivar value: The C++ value of option variable.  Comes from the "value" attribute of the <option> tag.
-    @ivar name: The name of this member variable.  Comes from the "name" attribute of the <option> tag.
-    @ivar description: The description of this option.  Comes from the text between <option> and </option>.
-    @ivar cname: The name of this member for use in C++.
-    """
+    """This class represents an option in an option list."""
 
-    def __init__(self, element):
-        """
-        This constructor converts an XML <option> element into an Option object.
-        """
+    def __init__(self, element:Element):
+        """This constructor converts an XML <option> element into an Option object."""
         assert element.tagName == 'option'
-        # parent = element.parentNode
-        # sisters = parent.getElementsByTagName('option')
 
         # member attributes
-        self.value = element.getAttribute('value')  # type: str
-        self.name = element.getAttribute('name')  # type: str
-        self.description = self.name  # type: str
+        self.value = element.getAttribute('value')
+        """The C++ value of option variable.  Comes from the "value" attribute of the <option> tag."""
+        self.name = element.getAttribute('name')
+        """The name of this member variable.  Comes from the "name" attribute of the <option> tag."""
+        self.description: str = self.name
+        """The description of this option.  Comes from the text between <option> and </option>."""
+
+        # TODO: figure what this does to document it
         if element.firstChild:
             assert element.firstChild.nodeType == Node.TEXT_NODE
             self.description = element.firstChild.nodeValue.strip()
-        self.cname = self.name.upper().replace(" ", "_").replace("-", "_").replace("/", "_").replace("=", "_").replace(
-            ":", "_")  # type: str
+        
+        self.cname = self.name.upper().replace(" ", "_").replace("-", "_").replace("/", "_").replace("=", "_").replace( ":", "_")
+        """The name of this member for use in C++."""
 
 
 @export
-class Member:
-    """
-    This class represents the nif.xml <add> tag.
-    @ivar name:  The name of this member variable.  Comes from the "name" attribute of the <add> tag.
-    @ivar arg: The argument of this member variable.  Comes from the "arg" attribute of the <add> tag.
-    @ivar template: The template type of this member variable.  Comes from the "template" attribute of the <add> tag.
-    @ivar length: The first array size of this member variable.  Comes from the "length" attribute of the <add> tag.
-    @ivar width: The first array size of this member variable.  Comes from the "width" attribute of the <add> tag.
-    @ivar cond: The condition of this member variable.  Comes from the "cond" attribute of the <add> tag.
-    @ivar func: The function of this member variable.  Comes from the "func" attribute of the <add> tag.
-    @ivar default: The default value of this member variable.  Comes from the "default" attribute of the <add> tag.
-        Formatted to be ready to use in a C++ constructor initializer list.
-    @ivar since: The first version this member exists.  Comes from the "since" attribute of the <add> tag.
-    @ivar until: The last version this member exists.  Comes from the "until" attribute of the <add> tag.
-    @ivar userver: The user version where this member exists.  Comes from the "userver" attribute of the <add> tag.
-    @ivar userver2: The user version 2 where this member exists.  Comes from the "userver2" attribute of the <add> tag.
-    @ivar vercond: The version condition of this member variable.  Comes from the "vercond" attribute of the <add> tag.
-    @ivar is_public: Whether this member will be declared public.  Comes from the "public" attribute of the <add> tag.
-    @ivar is_abstract: Whether this member is abstract.  This means that it does not factor into read/write.
-    @ivar description: The description of this member variable.  Comes from the text between <add> and </add>.
-    @ivar uses_argument: Specifies whether this attribute uses an argument.
-    @ivar type_is_native: Specifies whether the type is implemented natively
-    @ivar is_duplicate: Specifies whether this is a duplicate of a previously declared member
-    @ivar width_dynamic: Specifies whether width refers to an array (?)
-    @ivar length_ref: Names of the attributes it is a (unmasked) size of (?)
-    @ivar width_ref: Names of the attributes it is a (unmasked) size of (?)
-    @ivar cond_ref: Names of the attributes it is a condition of (?)
-    @ivar cname: Unlike default, name isn't formatted for C++ so use this instead?
-    @ivar ctype: Unlike default, type isn't formatted for C++ so use this instead?
-    @ivar carg: Unlike default, arg isn't formatted for C++ so use this instead?
-    @ivar ctemplate: Unlike default, template isn't formatted for C++ so use this instead?
-    @ivar clength_ref: Unlike default, length_ref isn't formatted for C++ so use this instead?
-    @ivar cwidth_ref: Unlike default, width_ref isn't formatted for C++ so use this instead?
-    @ivar ccond_ref: Unlike default, cond_ref isn't formatted for C++ so use this instead?
-    @ivar next_dup: Next duplicate member
-    @ivar is_manual_update: True if the member value is manually updated by the code
-    """
+class Field:
+    """This class represents the nif.xml <add> tag."""
 
-    def __init__(self, element):
+    def __init__(self, element: Element):
         """
-        This constructor converts an XML <add> element into a Member object.
+        This constructor converts an XML <field> element into a Member object.
         Some sort of processing is applied to the various variables that are copied from the XML tag...
         Seems to be trying to set reasonable defaults for certain types, and put things into C++ format generally.
-        @param prefix: An optional prefix used in some situations?
-        @type prefix: string
-        @return The expression formatted into a string?
-        @rtype: string?
         """
-        assert element.tagName == 'add'
-        # parent = element.parentNode
-        # sisters = parent.getElementsByTagName('add')
+        assert element.tagName == 'field'
 
         # member attributes
-        self.name = element.getAttribute('name')  # type: str
-        self.suffix = element.getAttribute('suffix')  # type: str
-        self.type = element.getAttribute('type')  # type: str
-        self.arg = element.getAttribute('arg')  # type: str
-        self.template = element.getAttribute('template')  # type: str
-        self.length = Expr(element.getAttribute('length'))  # type: Expr
-        self.width = Expr(element.getAttribute('width'))  # type: Expr
-        self.cond = Expr(element.getAttribute('cond'))  # type: Expr
-        self.func = element.getAttribute('function')  # type: str
-        self.default = element.getAttribute('default')  # type: str
-        self.orig_since = element.getAttribute('since')  # type: str
-        self.orig_until = element.getAttribute('until')  # type: str
-        self.since = version2number(element.getAttribute('since'))  # type: int
-        self.until = version2number(element.getAttribute('until'))  # type: int
+        self.name: str = element.getAttribute('name')
+        """The name of this member variable. Comes from the "name" attribute of the <add> tag."""
+        self.suffix = element.getAttribute('suffix')
+        self.type = element.getAttribute('type')
+        self.arg = element.getAttribute('arg')
+        """The argument of this member variable.  Comes from the "arg" attribute of the <add> tag."""
+        self.template: str = element.getAttribute('template')
+        """The template type of this member variable.  Comes from the "template" attribute of the <add> tag."""
+        self.length: Expr = Expr(element.getAttribute('length'))
+        """The first array size of this member variable.  Comes from the "length" attribute of the <add> tag."""
+        self.width: Expr = Expr(element.getAttribute('width'))
+        """The first array size of this member variable.  Comes from the "width" attribute of the <add> tag."""
+        self.cond: Expr = Expr(element.getAttribute('cond'))
+        """The condition of this member variable.  Comes from the "cond" attribute of the <add> tag."""
+        self.func: str = element.getAttribute('function')
+        """The function of this member variable.  Comes from the "func" attribute of the <add> tag."""
+        self.default: str = element.getAttribute('default')
+        """The default value of this member variable.  Comes from the "default" attribute of the <add> tag. Formatted to be ready to use in a C++ constructor initializer list."""
+        self.orig_since: str = element.getAttribute('since')
+        self.orig_until: str = element.getAttribute('until')
+        self.since: int = version2number(element.getAttribute('since'))
+        """The first version this member exists.  Comes from the "since" attribute of the <add> tag."""
+        self.until: int = version2number(element.getAttribute('until'))
+        """The last version this member exists.  Comes from the "until" attribute of the <add> tag."""
         xint = lambda s: int(s) if s else None
-        self.userver = xint(element.getAttribute('userver'))  # type: Optional[int]
-        self.userver2 = xint(element.getAttribute('userver2'))  # type: Optional[int]
-        self.vercond = Expr(element.getAttribute('vercond'))  # type: Expr
-        self.is_public = (element.getAttribute('public') == "1")  # type: bool
-        self.is_abstract = (element.getAttribute('abstract') == "1")  # type: bool
-        self.next_dup = None  # type: Optional[Member]
-        self.is_manual_update = False  # type: bool
-        self.is_calculated = (element.getAttribute('calculated') == "1")  # type: bool
+        self.userver: Optional[int] = xint(element.getAttribute('userver'))
+        """The user version where this member exists.  Comes from the "userver" attribute of the <add> tag."""
+        self.userver2: Optional[int] = xint(element.getAttribute('userver2'))
+        """The user version 2 where this member exists.  Comes from the "userver2" attribute of the <add> tag."""
+        self.vercond: Expr = Expr(element.getAttribute('vercond'))
+        """The version condition of this member variable.  Comes from the "vercond" attribute of the <add> tag."""
+        self.is_public: bool = (element.getAttribute('public') == "1")
+        """Whether this member will be declared public.  Comes from the "public" attribute of the <add> tag."""
+        self.is_abstract: bool = (element.getAttribute('abstract') == "1")
+        """Whether this member is abstract.  This means that it does not factor into read/write."""
+        self.next_dup: Optional[Field] = None
+        """Next duplicate member"""
+        self.is_manual_update: bool = False
+        """True if the member value is manually updated by the code"""
+        self.is_calculated: bool = (element.getAttribute('calculated') == "1")
 
         # Get description from text between start and end tags
-        self.description = ""  # type: str
+        self.description: str = ""
+        """The description of this member variable.  Comes from the text between <add> and </add>."""
         if element.firstChild:
             assert element.firstChild.nodeType == Node.TEXT_NODE
             self.description = element.firstChild.nodeValue.strip()
@@ -702,7 +649,7 @@ class Member:
                 self.default = "-1"
             elif self.type in NAMES_BASIC:
                 self.default = "0"
-            elif self.type in NAMES_FLAG or self.type in NAMES_ENUM:
+            elif self.type in NAMES_BITFLAG or self.type in NAMES_ENUM:
                 self.default = "0"
         if self.default:
             if self.default[0] == '(' and self.default[-1] == ')':
@@ -723,19 +670,20 @@ class Member:
             else:
                 self.default = "(%s)%s" % (class_name(self.type), self.default)
 
-        # calculate other stuff
-        self.uses_argument = (
-                    self.cond.lhs == '(ARG)' or self.length.lhs == '(ARG)' or self.width.lhs == '(ARG)')  # type: bool
+        self.uses_argument: bool = self.cond.lhs == '(ARG)' or self.length.lhs == '(ARG)' or self.width.lhs == '(ARG)'
+        """Specifies whether this attribute uses an argument."""
 
-        # true if the type is implemented natively
-        self.type_is_native = self.name in TYPES_NATIVE  # type: bool
+        self.type_is_native: bool = self.name in TYPES_NATIVE
+        """true if the type is implemented natively"""
 
-        # calculate stuff from reference to previous members
-        # true if this is a duplicate of a previously declared member
-        self.is_duplicate = False  # type: bool
+        self.is_duplicate: bool = False
+        """true if this is a duplicate of a previously declared member"""
 
         # true if width refers to an array
-        self.width_dynamic = False  # type: bool
+        self.width_dynamic: bool = False
+        """Specifies whether width refers to an array (?)"""
+
+
         sib = element.previousSibling
         while sib:
             if sib.nodeType == Node.ELEMENT_NODE:
@@ -749,12 +697,12 @@ class Member:
             sib = sib.previousSibling
 
         # Calculate stuff from reference to next members
-        # Names of the attributes it is a (unmasked) size of
-        self.length_ref = []  # type: List[str]
-        # Names of the attributes it is a (unmasked) size of
-        self.width_ref = []  # type: List[str]
-        # Names of the attributes it is a condition of
-        self.cond_ref = []  # type: List[str]
+        self.length_ref: list[str] = []
+        """# Names of the attributes it is a (unmasked) size of"""
+        self.width_ref: list[str] = []
+        """Names of the attributes it is a (unmasked) size of"""
+        self.cond_ref: list[str] = []
+        """Names of the attributes it is a condition of"""
         sib = element.nextSibling
         while sib is not None:
             if sib.nodeType == Node.ELEMENT_NODE:
@@ -771,20 +719,27 @@ class Member:
             sib = sib.nextSibling
 
         # C++ names
-        self.c_name = member_name(self.name if not self.suffix else self.name + "_" + self.suffix)  # type: str
-        self.c_type = class_name(self.type)  # type: str
-        self.c_arg = member_name(self.arg)  # type: str
-        self.c_template = class_name(self.template)  # type: str
-        self.c_length_ref = [member_name(n) for n in self.length_ref]  # type: List[str]
-        self.c_width_ref = [member_name(n) for n in self.width_ref]  # type: List[str]
-        self.c_cond_ref = [member_name(n) for n in self.cond_ref]  # type: List[str]
+        self.c_name: str = member_name(self.name if not self.suffix else self.name + "_" + self.suffix)
+        """Unlike default, name isn't formatted for C++ so use this instead?"""
+        self.c_type: str = class_name(self.type)
+        """Unlike default, type isn't formatted for C++ so use this instead?"""
+        self.c_arg: str = member_name(self.arg)
+        """Unlike default, arg isn't formatted for C++ so use this instead?"""
+        self.c_template: str = class_name(self.template)
+        """Unlike default, template isn't formatted for C++ so use this instead?"""
+        self.c_length_ref: list[str] = [member_name(n) for n in self.length_ref]
+        """Unlike default, length_ref isn't formatted for C++ so use this instead?"""
+        self.c_width_ref: list[str] = [member_name(n) for n in self.width_ref]
+        """Unlike default, width_ref isn't formatted for C++ so use this instead?"""
+        self.c_cond_ref: list[str] = [member_name(n) for n in self.cond_ref]
+        """Unlike default, cond_ref isn't formatted for C++ so use this instead?"""
 
 
 class NifXml:
     """This class represents the nif.xml <niftoolsxml> tag."""
 
-    def __init__(self, element):
-        self.version = version2number(element.getAttribute('version'))  # type: int
+    def __init__(self, element: Element):
+        self.version: int = version2number(element.getAttribute('version'))
 
     def is_supported(self):  # type: () -> bool
         """If the nif.xml version meets the requirements."""
@@ -798,37 +753,44 @@ class Version:
     def __str__(self):
         return self.name
 
-    def __init__(self, element):
-        self.num = element.getAttribute('num')  # type: str
-        # Treat the version as a name to match other tags
-        self.name = element.getAttribute('id')  # type: str
-        self.description = element.firstChild.nodeValue.strip()  # type: str
+    def __init__(self, element: Element):
+        self.num: str = element.getAttribute('num')
+        """The version raw number eg: 0.0.0.0"""
+        self.name: str = element.getAttribute('id')
+        """The value used to identify the version in the nif.xml file"""
+        self.description: str = element.firstChild.nodeValue.strip()
+        """What the version number represents in a human readable manner"""
 
 
 @export
 class Basic:
-    """This class represents the nif.xml <basic> tag."""
+    """This class details a basic data type found in a <basic> tag."""
 
-    def __init__(self, element, ntypes):
-        self.name = element.getAttribute('name')  # type: str
-        assert self.name  # debug
-        self.cname = class_name(self.name)  # type: str
-        self.description = ""  # type: str
+    def __init__(self, element: Element, ntypes):
+        self.name: str = element.getAttribute('name')
+        """The name associated with the basic type"""
+        assert self.name  # name is mandatory
+
+        self.cname: str = class_name(self.name)
+        """The name that should be used in c++ files"""
+        
+        self.description: str = ""
+        """A human readable description of the datatype"""
         if element.firstChild and element.firstChild.nodeType == Node.TEXT_NODE:
             self.description = element.firstChild.nodeValue.strip()
         elif self.name.lower().find("unk") == 0:
             self.description = "Unknown."
 
-        self.count = element.getAttribute('count')  # type: str
-        self.template = (element.getAttribute('istemplate') == "1")  # type: bool
-        self.options = []  # type: List[Option]
+        self.count: str = element.getAttribute('count')
+        self.template: bool = (element.getAttribute('istemplate') == "1")
+        self.options: list[Option] = []
 
-        self.is_link = False  # type: bool
-        self.is_crossref = False  # type: bool
-        self.has_links = False  # type: bool
-        self.has_crossrefs = False  # type: bool
+        self.is_link: bool = False
+        self.is_crossref: bool = False
+        self.has_links: bool = False
+        self.has_crossrefs: bool = False
 
-        self.nativetype = None  # type: Optional[str]
+        self.nativetype: Optional[str] = None 
         if ntypes:
             self.nativetype = ntypes.get(self.name)
             if self.nativetype:
@@ -845,7 +807,7 @@ class Basic:
 class Enum(Basic):
     """This class represents the nif.xml <enum> tag."""
 
-    def __init__(self, element, ntypes):
+    def __init__(self, element: Element, ntypes: dict[str,str]):
         Basic.__init__(self, element, ntypes)
 
         self.storage = element.getAttribute('storage')
@@ -867,10 +829,10 @@ class Enum(Basic):
 
 
 @export
-class Flag(Enum):
+class BitFlag(Enum):
     """This class represents the nif.xml <bitflags> tag."""
 
-    def __init__(self, element, ntypes):
+    def __init__(self, element: Element , ntypes: dict[str,str]):
         Enum.__init__(self, element, ntypes)
         for option in self.options:
             option.bit = option.value
@@ -881,15 +843,15 @@ class Flag(Enum):
 class Struct(Basic):
     """This class represents the nif.xml <struct> tag."""
 
-    def __init__(self, element, ntypes):
+    def __init__(self, element:Element, ntypes: dict[str,str]):
         Basic.__init__(self, element, ntypes)
 
-        self.members = []  # type: List[Member]
+        self.members = []  # type: List[Field]
         self.argument = False  # type: bool
 
         # store all attribute data & calculate stuff
-        for member in element.getElementsByTagName('add'):
-            x = Member(member)
+        for member in element.getElementsByTagName('field'):
+            x = Field(member)
 
             # Ignore infinite recursion on already visited structs
             if x in self.members:
@@ -927,14 +889,14 @@ class Struct(Basic):
                 elif outer == inner:
                     atx = True
 
-    def find_member(self, name, inherit=False):  # type: (str, bool) -> Optional[Member]
+    def find_field(self, name: str, inherit:bool = False) -> Optional[Field]:
         """Find member by name"""
         for mem in self.members:
             if mem.name == name:
                 return mem
         return None
 
-    def find_first_ref(self, name):  # type: (str) -> Optional[Member]
+    def find_first_ref(self, name: str) -> Optional[Field]:
         """Find first reference of name in class."""
         for mem in self.members:
             if mem.length and mem.length.lhs == name:
@@ -943,7 +905,7 @@ class Struct(Basic):
                 return mem
         return None
 
-    def has_arr(self):  # type: () -> bool
+    def has_arr(self) -> bool:
         """Tests recursively for members with an array size."""
         for mem in self.members:
             if mem.length.lhs or (mem.type in TYPES_STRUCT and TYPES_STRUCT[mem.type].has_arr()):
@@ -952,24 +914,24 @@ class Struct(Basic):
 
 
 @export
-class Block(Struct):
+class NiObject(Struct):
     """This class represents the nif.xml <niobject> tag."""
 
     def __init__(self, element, ntypes):
         Struct.__init__(self, element, ntypes)
         self.is_ancestor = (element.getAttribute('abstract') == "1")
         inherit = element.getAttribute('inherit')
-        self.inherit = TYPES_BLOCK[inherit] if inherit else None
+        self.inherit = TYPES_NIOBJECT[inherit] if inherit else None
         self.has_interface = (element.getElementsByTagName('interface') != [])
 
-    def find_member(self, name, inherit=False):  # type: (str, bool) -> Optional[Member]
+    def find_field(self, name: str, inherit: bool=False) -> Optional[Field]:
         """Find member by name"""
-        ret = Struct.find_member(self, name)
+        ret = Struct.find_field(self, name)
         if not ret and inherit and self.inherit:
             ret = self.inherit.find_member(name, inherit)
         return ret
 
-    def find_first_ref(self, name):  # type: (str) -> Optional[Member]
+    def find_first_ref(self, name: str) -> Optional[Field]:
         """Find first reference of name in class"""
         ret = None
         if self.inherit:
@@ -978,7 +940,7 @@ class Block(Struct):
             ret = Struct.find_first_ref(self, name)
         return ret
 
-    def ancestors(self):  # type: () -> List[Block]
+    def ancestors(self): # type: () -> list[NiObject]
         """List all ancestors of this block"""
         ancestors = []
         parent = self
@@ -988,11 +950,46 @@ class Block(Struct):
         return ancestors
 
 
+class Token:
+    """A key pair for data retrival, it's not a dictionary because it makes stuff simpler to deal with."""
+
+    def __init__(self, tag):
+        self.name: str = tag.getAttribute("token")
+        """The name of the token"""
+        # all vars should be formatted like #name#
+        assert self.name.startswith("#") and self.name.endswith("#")
+        self.value: str = tag.getAttribute("string")
+        """The value that should replace the token"""
+
+
+
+def replaceTokens(element: Element, tokenGroups: dict[str, list[Token]]):
+    """Replaces tokens with their text equivalents."""
+
+    attr: Attr
+    for attr in element._attrs.values():
+        if attr.name in tokenGroups:
+            found = True
+            while found:
+                found = False
+                for token in tokenGroups[attr.name]:
+                    if token.name in attr.value:
+                        attr.value = attr.value.replace(token.name, token.value)
+                        found = True
+
+    child: Node
+    for child in element.childNodes:
+        if child.nodeType == child.ELEMENT_NODE:
+            replaceTokens(child, tokenGroups)
+
+
+
 @export
-def parse_xml(ntypes=None, path=XML_PATH):  # type: (Optional[Dict[str, str]], str) -> bool
+def parse_xml(ntypes: dict[str,str] = None, path: str = XML_PATH) -> bool: 
     """Import elements into our NIF classes"""
+
     if os.path.exists(path):
-        xml = parse(path)
+        xml = parse(path) # type: Document
     else:
         raise ImportError("nif.xml not found")
 
@@ -1004,6 +1001,41 @@ def parse_xml(ntypes=None, path=XML_PATH):  # type: (Optional[Dict[str, str]], s
     if not nifxml.is_supported():
         logger.error("The nif.xml version you are trying to parse is not supported by nifxml.py.")
         return False
+
+    # For some reason tokens that contain other tokens are placed before those tokens.
+    # It seems that this is needed for some thing that uses this functionality.
+    # So let's make this a direction agnostic token list.
+
+    # 1. Find all tokens verexpr
+    tokenGroups = {} # type: dict[str, list[Token]]
+    allTokens = [] # type: list[Token]
+    for element in xml.getElementsByTagName('token'):
+        # initialize categories if they don't already exist
+        attrs = element.getAttribute('attrs').split();
+        for attrType in attrs:
+            tokenGroups.setdefault(attrType, [])
+        # Yall should really look into setteling on a single name, it makes handling this a lot less confusing.
+        for tokenTag in element.getElementsByTagName(element.getAttribute("name")):
+            token = Token(tokenTag)
+            for attrType in attrs:
+                tokenGroups[attrType].append(token)
+                allTokens.append(token)
+
+
+    # 2. Replace tokens with values for tokens that contain other tokens. Repeat until no token found.
+    foundToken = True
+    while foundToken:
+        foundToken = False
+        for src in allTokens:
+            for trg in allTokens:
+                if trg.name in src.value:
+                    src.value = src.value.replace(trg.name, trg.value)
+                    foundToken = True
+
+    #replace every token in the document
+    for child in xml.documentElement.childNodes:
+        if child.nodeType == xml.ELEMENT_NODE and child.tagName != "token":
+            replaceTokens(child, tokenGroups)
 
     for element in xml.getElementsByTagName('version'):
         instance = Version(element)
@@ -1024,10 +1056,10 @@ def parse_xml(ntypes=None, path=XML_PATH):  # type: (Optional[Dict[str, str]], s
         NAMES_ENUM.append(instance.name)
 
     for element in xml.getElementsByTagName('bitflags'):
-        instance = Flag(element, ntypes)
-        assert instance.name not in TYPES_FLAG
-        TYPES_FLAG[instance.name] = instance
-        NAMES_FLAG.append(instance.name)
+        instance = BitFlag(element, ntypes)
+        assert instance.name not in TYPES_BITFLAG
+        TYPES_BITFLAG[instance.name] = instance
+        NAMES_BITFLAG.append(instance.name)
 
     for element in xml.getElementsByTagName('struct'):
         instance = Struct(element, ntypes)
@@ -1036,10 +1068,10 @@ def parse_xml(ntypes=None, path=XML_PATH):  # type: (Optional[Dict[str, str]], s
         NAMES_STRUCT.append(instance.name)
 
     for element in xml.getElementsByTagName('niobject'):
-        instance = Block(element, ntypes)
-        assert instance.name not in TYPES_BLOCK
-        TYPES_BLOCK[instance.name] = instance
-        NAMES_BLOCK.append(instance.name)
+        instance = NiObject(element, ntypes)
+        assert instance.name not in TYPES_NIOBJECT
+        TYPES_NIOBJECT[instance.name] = instance
+        NAMES_NIOBJECT.append(instance.name)
 
     return validate_xml()
 
@@ -1050,9 +1082,9 @@ def validate_xml():  # type: () -> bool
     versions = val(TYPES_VERSION, NAMES_VERSION)
     basics = val(TYPES_BASIC, NAMES_BASIC)
     structs = val(TYPES_STRUCT, NAMES_STRUCT)
-    blocks = val(TYPES_BLOCK, NAMES_BLOCK)
+    blocks = val(TYPES_NIOBJECT, NAMES_NIOBJECT)
     enums = val(TYPES_ENUM, NAMES_ENUM)
-    flags = val(TYPES_FLAG, NAMES_FLAG)
+    flags = val(TYPES_BITFLAG, NAMES_BITFLAG)
     res = (versions and basics and structs and blocks and enums and flags)
     if not res:
         logger = logging.getLogger('nifxml')
