@@ -3206,15 +3206,6 @@
         A sphere.
     </niobject>
 
-    <niobject name="bhkCylinderShape" inherit="bhkConvexShape" module="BSHavok" versions="#BETHESDA#">
-        A cylinder.
-        <field name="Unused 01" type="byte" length="8" binary="true" />
-        <field name="Vertex A" type="Vector4" />
-        <field name="Vertex B" type="Vector4" />
-        <field name="Cylinder Radius" type="float" />
-        <field name="Unused 02" type="byte" length="12" binary="true" />
-    </niobject>
-
     <niobject name="bhkCapsuleShape" inherit="bhkConvexShape" module="BSHavok" versions="#BETHESDA#">
         A capsule.
         <field name="Unused 01" type="byte" length="8" binary="true" />
@@ -3222,6 +3213,15 @@
         <field name="Radius 1" type="float">Matches first capsule radius.</field>
         <field name="Second Point" type="Vector3">Second point on the capsule's axis.</field>
         <field name="Radius 2" type="float">Matches second capsule radius.</field>
+    </niobject>
+
+	<niobject name="bhkCylinderShape" inherit="bhkConvexShape" module="BSHavok" versions="#BETHESDA#">
+        A cylinder.
+        <field name="Unused 01" type="byte" length="8" binary="true" />
+        <field name="Vertex A" type="Vector4">Front end of the cylinder.</field>
+        <field name="Vertex B" type="Vector4">Rear end of the cylinder.</field>
+        <field name="Cylinder Radius" type="float">Matches first cylinder radius.</field>
+        <field name="Unused 02" type="byte" length="12" binary="true" />
     </niobject>
 
     <niobject name="bhkBoxShape" inherit="bhkConvexShape" module="BSHavok" versions="#BETHESDA#">
