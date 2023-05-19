@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE niftoolsxml>
-<niftoolsxml version="0.9.3.0">
+<niftoolsxml version="0.9.1.0">
     <!-- The versions found in use by the engine which have any amount of decoding or support from nif.xml
             NOTE: Hypothetical versions such as those used in version conditions must NOT receive version tags.
 
@@ -27,10 +27,6 @@
             A version without any `{{}}` names implies that this version is "secondary".
             Note: A unique game name should only have `{{}}` around it once.
     -->
-
-    <verattr name="num" access="#VER#" index="0" />
-    <verattr name="user" access="#USER#" index="1" />
-    <verattr name="bsver" access="#BSVER#" index="2" />
 
     <version id="V2_3" num="2.3" supported="false">Dark Age of Camelot</version>
     <version id="V3_0" num="3.0" supported="false">Star Trek: Bridge Commander</version>
@@ -117,14 +113,14 @@
         <verexpr token="#NI_BS_LT_FO3#" string="(#BSVER# #LT# 34)">All NI + BS before Fallout 3.</verexpr>
         <verexpr token="#NI_BS_LTE_FO3#" string="(#BSVER# #LTE# 34)">All NI + BS until Fallout 3.</verexpr>
         <verexpr token="#NI_BS_LT_SSE#" string="(#BSVER# #LT# 100)">All NI + BS before SSE.</verexpr>
-        <verexpr token="#NI_BS_LTE_SSE#" string="(#BSVER# #LTE# 100)">All NI + BS before SSE.</verexpr>
+		<verexpr token="#NI_BS_LTE_SSE#" string="(#BSVER# #LTE# 100)">All NI + BS before SSE.</verexpr>																							   
         <verexpr token="#NI_BS_LT_FO4#" string="(#BSVER# #LT# 130)">All NI + BS before Fallout 4.</verexpr>
         <verexpr token="#NI_BS_LTE_FO4#" string="(#BSVER# #LTE# 139)">All NI + BS until Fallout 4.</verexpr>
         <verexpr token="#BS_GT_FO3#" string="(#BSVER# #GT# 34)">Skyrim, SSE, and Fallout 4</verexpr>
         <verexpr token="#BS_GTE_FO3#" string="(#BSVER# #GTE# 34)">FO3 and later.</verexpr>
         <verexpr token="#BS_GTE_SKY#" string="(#BSVER# #GTE# 83)">Skyrim and later.</verexpr>
         <verexpr token="#BS_GTE_SSE#" string="(#BSVER# #GTE# 100)">SSE and later.</verexpr>
-        <verexpr token="#BS_GTE_FO4#" string="(#BSVER# #GTE# 130)">Fallout 4 and later.</verexpr>
+		<verexpr token="#BS_GTE_FO4#" string="(#BSVER# #GTE# 130)">Fallout 4 and later.</verexpr>																						 
         <verexpr token="#BS_SSE#" string="(#BSVER# #EQ# 100)">SSE only.</verexpr>
         <verexpr token="#BS_FO4#" string="(#BSVER# #EQ# 130)">Fallout 4 strictly, excluding stream 132 and 139 in dev files.</verexpr>
         <verexpr token="#BS_FO4_2#" string="((#BSVER# #GTE# 130) #AND# (#BSVER# #LTE# 139))">Fallout 4/76 including dev files.</verexpr>
@@ -153,7 +149,7 @@
         <verset token="#F76#" string="V20_2_0_7_F76" />
         <verset token="#FO3_AND_LATER#" string="V20_0_0_4__11 V20_2_0_7__11_1 V20_2_0_7__11_2 V20_2_0_7__11_3 V20_2_0_7__11_4 V20_2_0_7__11_5 V20_2_0_7__11_6 V20_2_0_7__11_7 V20_2_0_7__11_8 V20_2_0_7_FO3 V20_2_0_7_SKY V20_2_0_7_SSE V20_2_0_7_FO4 V20_2_0_7_F76" />
         <verset token="#SKY_AND_LATER#" string="V20_2_0_7_SKY V20_2_0_7_SSE V20_2_0_7_FO4 V20_2_0_7_F76" />
-        <verset token="#FO4_AND_LATER#" string="V20_2_0_7_FO4 V20_2_0_7_F76" />
+		<verset token="#FO4_AND_LATER#" string="V20_2_0_7_FO4 V20_2_0_7_F76" />																	   
     </token>
 
     <token name="default" attrs="default">
@@ -334,10 +330,9 @@
         A 32-bit unsigned integer, used to refer to strings in the header.
     </basic>
 
-    <!--Enumerations
-        These are like C enums and consist of a list of options.  They can appear
-        as parts of structs or niobjects.-->
-
+	<!--Enumerations				
+		These are like C enums and consist of a list of options.  They can appear																		 
+		as parts of structs or niobjects.-->									
     <bitflags name="AccumFlags" storage="uint">
         Describes the options for the accum root on NiControllerSequence.
         <option bit="0" name="ACCUM_X_TRANS">X Translation will be accumulated.</option>
@@ -558,8 +553,8 @@
         Bethesda Havok. Material descriptor for a Havok shape in Skyrim.
         <option value="0" name="SKY_HAV_MAT_NONE">Invalid Material</option>
         <option value="131151687" name="SKY_HAV_MAT_BROKEN_STONE">Broken Stone</option>
-        <option value="322207473" name="SKY_HAV_MAT_MATERIAL_CARRIAGE_WHEEL">Material Carriage Wheel</option>
-        <option value="346811165" name="SKY_HAV_MAT_MATERIAL_METAL_LIGHT">Material Metal Light</option>
+		<option value="322207473" name="SKY_HAV_MAT_MATERIAL_CARRIAGE_WHEEL">Material Carriage Wheel</option>
+        <option value="346811165" name="SKY_HAV_MAT_MATERIAL_METAL_LIGHT">Material Metal Light</option>																									 																								   
         <option value="365420259" name="SKY_HAV_MAT_LIGHT_WOOD">Light Wood</option>
         <option value="398949039" name="SKY_HAV_MAT_SNOW">Snow</option>
         <option value="428587608" name="SKY_HAV_MAT_GRAVEL">Gravel</option>
@@ -572,7 +567,7 @@
         <option value="781661019" name="SKY_HAV_MAT_MATERIAL_CERAMIC_MEDIUM">Material Ceramic Medium</option>
         <option value="790784366" name="SKY_HAV_MAT_MATERIAL_BASKET">Material Basket</option>
         <option value="873356572" name="SKY_HAV_MAT_ICE">Ice</option>
-        <option value="880200008" name="SKY_HAV_MAT_STAIRS_GLASS">Stairs Glass</option>
+		<option value="880200008" name="SKY_HAV_MAT_STAIRS_GLASS">Stairs Glass</option>																			   
         <option value="899511101" name="SKY_HAV_MAT_STAIRS_STONE">Stairs Stone</option>
         <option value="1024582599" name="SKY_HAV_MAT_WATER">Water</option>
         <option value="1028101969" name="SKY_HAV_MAT_UNKNOWN_1028101969">Unknown in Creation Kit v1.6.89.0. Found in actors\draugr\character assets\skeletons.nif.</option>
@@ -602,7 +597,7 @@
         <option value="2518321175" name="SKY_HAV_MAT_DRAGON">Dragon</option>
         <option value="2617944780" name="SKY_HAV_MAT_MATERIAL_BLADE_1HAND_SMALL">Material Blade 1Hand Small</option>
         <option value="2632367422" name="SKY_HAV_MAT_MATERIAL_SKIN_SMALL">Material Skin Small</option>
-        <option value="2742858142" name="SKY_HAV_MAT_MATERIAL_POTS_PANS">Material Pots Pans</option>
+		<option value="2742858142" name="SKY_HAV_MAT_MATERIAL_POTS_PANS">Material Pots Pans</option>																							
         <option value="2892392795" name="SKY_HAV_MAT_STAIRS_BROKEN_STONE">Stairs Broken Stone</option>
         <option value="2965929619" name="SKY_HAV_MAT_MATERIAL_SKIN_LARGE">Material Skin Large</option>
         <option value="2974920155" name="SKY_HAV_MAT_ORGANIC">Organic</option>
@@ -610,7 +605,7 @@
         <option value="3070783559" name="SKY_HAV_MAT_HEAVY_WOOD">Heavy Wood</option>
         <option value="3074114406" name="SKY_HAV_MAT_MATERIAL_CHAIN">Material Chain</option>
         <option value="3106094762" name="SKY_HAV_MAT_DIRT">Dirt</option>
-        <option value="3387452107" name="SKY_HAV_MAT_MATERIAL_SKIN_METAL_LARGE">Material Skin Metal Large</option>
+		<option value="3387452107" name="SKY_HAV_MAT_MATERIAL_SKIN_METAL_LARGE">Material Skin Metal Large</option>																										  
         <option value="3424720541" name="SKY_HAV_MAT_MATERIAL_ARMOR_LIGHT">Material Armor Light</option>
         <option value="3448167928" name="SKY_HAV_MAT_MATERIAL_SHIELD_LIGHT">Material Shield Light</option>
         <option value="3589100606" name="SKY_HAV_MAT_MATERIAL_COIN">Material Coin</option>
@@ -619,11 +614,11 @@
         <option value="3725505938" name="SKY_HAV_MAT_MATERIAL_ARROW">Material Arrow</option>
         <option value="3739830338" name="SKY_HAV_MAT_GLASS">Glass</option>
         <option value="3741512247" name="SKY_HAV_MAT_STONE">Stone</option>
-        <option value="3764646153" name="SKY_HAV_MAT_MATERIAL_WATER_PUDDLE">Material Water Puddle</option>
+		<option value="3764646153" name="SKY_HAV_MAT_MATERIAL_WATER_PUDDLE">Material Water Puddle</option>																								  
         <option value="3839073443" name="SKY_HAV_MAT_CLOTH">Cloth</option>
-        <option value="3855001958" name="SKY_HAV_MAT_MATERIAL_SKIN_METAL_SMALL">Material Skin Metal Small</option>
+		<option value="3855001958" name="SKY_HAV_MAT_MATERIAL_SKIN_METAL_SMALL">Material Skin Metal Small</option>
         <option value="3895166727" name="SKY_HAV_MAT_WARD">Ward</option>
-        <option value="3934839107" name="SKY_HAV_MAT_WEB">Web</option>
+        <option value="3934839107" name="SKY_HAV_MAT_WEB">Web</option>																										  																																			  
         <option value="3969592277" name="SKY_HAV_MAT_MATERIAL_BLUNT_2HAND">Material Blunt 2Hand</option>
         <option value="4239621792" name="SKY_HAV_MAT_UNKNOWN_4239621792">Unknown in Creation Kit v1.9.32.0. Found in Dawnguard DLC in meshes\dlc01\prototype\dlc1protoswingingbridge.nif.</option>
         <option value="4283869410" name="SKY_HAV_MAT_MATERIAL_BOULDER_MEDIUM">Material Boulder Medium</option>
@@ -635,7 +630,7 @@
         <option value="1820198263" name="SKY_HAV_MAT_UNKNOWN_1820198263">steelgreatsword</option>
     </enum>
 
-    <enum name="Fallout4HavokMaterial" storage="uint" versions="#F04_AND_LATER#">
+	<enum name="Fallout4HavokMaterial" storage="uint" versions="#F04_AND_LATER#">
         Bethesda Havok. Material descriptor for a Havok shape in Fallout4.
         <option value="2216694923" name="ActorArmored">ActorArmored</option>
         <option value="4288341836" name="ActorArmoredCrab">ActorArmoredCrab</option>
@@ -953,14 +948,14 @@
         <option value="44" name="SKYL_CUSTOMPICK2">Custom Pick 2</option>
         <option value="45" name="SKYL_SPELLEXPLOSION">Spell Explosion</option>
         <option value="46" name="SKYL_DROPPINGPICK">Dropping Pick</option>
-        <option value="47" name="SKYL_DEADACTORZONE">Dead Actor Zone</option>
-        <option value="48" name="SKYL_TRIGGER_FALLINGTRAP">Falling Trap Trigger</option>
-        <option value="49" name="SKYL_NAVCUT">Nav Cut</option>
-        <option value="50" name="SKYL_CRITTER">Critter</option>
-        <option value="51" name="SKYL_SPELLTRIGGER">Spell Trigger</option>
-        <option value="52" name="SKYL_LIVING_AND_DEAD_ACTORS">Living And Dead Actors</option>
-        <option value="53" name="SKYL_DETECTION">Detection</option>
-        <option value="54" name="SKYL_TRAP_TRIGGER">Trap Trigger</option>
+		<option value="47" name="SKYL_DEADACTORZONE">Dead Actor Zone</option>
+		<option value="48" name="SKYL_TRIGGER_FALLINGTRAP">Falling Trap Trigger</option>
+		<option value="49" name="SKYL_NAVCUT">Nav Cut</option>
+		<option value="50" name="SKYL_CRITTER">Critter</option>															   
+		<option value="51" name="SKYL_SPELLTRIGGER">Spell Trigger</option>
+		<option value="52" name="SKYL_LIVING_AND_DEAD_ACTORS">Living And Dead Actors</option>
+		<option value="53" name="SKYL_DETECTION">Detection</option>
+		<option value="54" name="SKYL_TRAP_TRIGGER">Trap Trigger</option>
     </enum>
 
     <enum name="BipedPart" storage="byte">
@@ -1783,10 +1778,9 @@
         <member width="1" pos="7" mask="0x0080" name="Linked Group" type="bool">If Layer is CHARCONTROLLER (CC), true means "CC Trigger Only".</member>
     </bitfield>
 
-    <!--Structs
+	<!--Structs
         These are like C structures and are used as sub-parts of more complex
         classes when there are multiple pieces of data repeated in an array.-->
-
     <struct name="SizedString" module="NiMain">
         A string of given length.
         <field name="Length" type="uint">The string length.</field>
@@ -2214,17 +2208,17 @@
 
     <bitflags name="VertexAttribute" storage="ushort" prefix="VF" versions="#SSE# #FO4# #F76#">
         The bits of BSVertexDesc that describe the enabled vertex attributes.
-        <option bit="0" name="Vertex" />
-        <option bit="1" name="UVs" />
-        <option bit="2" name="UVs_2" />
-        <option bit="3" name="Normals" />
-        <option bit="4" name="Tangents" />
-        <option bit="5" name="Vertex_Colors" />
-        <option bit="6" name="Skinned" />
-        <option bit="7" name="Land_Data" />
-        <option bit="8" name="Eye_Data" />
-        <option bit="9" name="Instance" />
-        <option bit="10" name="Full_Precision" />
+        <option bit="1" name="Vertex" />
+        <option bit="2" name="UVs" />
+        <option bit="3" name="UVs_2" />
+        <option bit="4" name="Normals" />
+        <option bit="5" name="Tangents" />
+        <option bit="6" name="Vertex_Colors" />
+        <option bit="7" name="Skinned" />
+        <option bit="8" name="Land_Data" />
+        <option bit="9" name="Eye_Data" />
+        <option bit="10" name="Instance" />
+        <option bit="11" name="Full_Precision" />
     </bitflags>
 
     <bitfield name="BSVertexDesc" storage="uint64" versions="#SSE# #FO4# #F76#">
@@ -2243,7 +2237,6 @@
     </bitfield>
 
 	<struct name="BSVertexData" versions="#SSE# #FO4# #F76#" module="BSMain">
-        Byte fields for normal, tangent and bitangent map [0, 255] to [-1, 1].
 		<field name="Vertex" type="Vector3" cond="(#ARG# #BITAND# 0x401) == 0x401" />
 		<field name="Bitangent X" type="float" cond="(#ARG# #BITAND# 0x411) == 0x411" />
 		<field name="Unused W" type="uint" cond="(#ARG# #BITAND# 0x411) == 0x401" />
@@ -2374,17 +2367,10 @@
         <field name="Entry Properties" type="FurnitureEntryPoints" vercond="#BS_GT_FO3#" />
     </struct>
 
-    <bitfield name="bhkWeldInfo" storage="ushort" module="BSHavok">
-        <member width="5" pos="0" mask="0x001F" name="Angle Edge 1" type="ushort" default="15"/>
-        <member width="5" pos="5" mask="0x03E0" name="Angle Edge 2" type="ushort" default="15" />
-        <member width="5" pos="10" mask="0x7C00" name="Angle Edge 3" type="ushort" default="15" />
-        <member width="1" pos="15" mask="0x8000" name="Unused bit" type="bool" default="false" />
-    </bitfield>
-
     <struct name="TriangleData" module="BSHavok" versions="#BETHESDA#">
         Bethesda Havok. A triangle with extra data used for physics.
         <field name="Triangle" type="Triangle">The triangle.</field>
-        <field name="Welding Info" type="bhkWeldInfo">Additional havok information on how triangles are welded.</field>
+        <field name="Welding Info" type="ushort">Additional havok information on how triangles are welded.</field>
         <field name="Normal" type="Vector3" until="20.0.0.5">This is the triangle's normal.</field>
     </struct>
 
@@ -2433,8 +2419,7 @@
         <field name="Unknown Int" type="uint" until="10.0.1.2" />
         <field name="Material" suffix="OB" type="OblivionHavokMaterial" until="20.0.0.5" vercond="#BSVER# #LT# 16">The material of the shape.</field>
         <field name="Material" suffix="FO" type="Fallout3HavokMaterial" vercond="(#VER# == 20.2.0.7) #AND# #NI_BS_LTE_FO3#">The material of the shape.</field>
-        <field name="Material" suffix="SK" type="SkyrimHavokMaterial" vercond="(#VER# == 20.2.0.7) #AND# #NI_BS_LTE_SSE#">The material of the shape.</field>
-        <field name="Material" suffix="FO4" type="Fallout4HavokMaterial" vercond="(#VER# == 20.2.0.7) #AND# #BS_GTE_FO4#">The material of the shape.</field>
+        <field name="Material" suffix="SK" type="SkyrimHavokMaterial" vercond="(#VER# == 20.2.0.7) #AND# #BS_GT_FO3#">The material of the shape.</field>
     </struct>
 
     <struct name="hkSubPartData" module="BSHavok" versions="#BETHESDA#">
@@ -2749,7 +2734,7 @@
         Bethesda extension of hkpCompressedMeshShape::BigTriangle. Triangles that don't fit the maximum size.
         <field name="Triangle" type="Triangle" />
         <field name="Material" type="uint" />
-        <field name="Welding Info" type="bhkWeldInfo" />
+        <field name="Welding Info" type="ushort" />
     </struct>
     
     <struct name="bhkQsTransform" size="32" module="BSHavok" versions="#SKY_AND_LATER#">
@@ -2757,21 +2742,21 @@
         <field name="Translation" type="Vector4">A vector that moves the chunk by the specified amount. W is not used.</field>
         <field name="Rotation" type="hkQuaternion">Rotation. Reference point for rotation is bhkRigidBody translation.</field>
     </struct>
-
+    
     <struct name="bhkCMSChunk" module="BSHavok" versions="#SKY_AND_LATER#">
         Bethesda extension of hkpCompressedMeshShape::Chunk. A compressed chunk of hkpCompressedMeshShape geometry.
         <field name="Translation" type="Vector4" />
         <field name="Material Index" type="uint">Index of material in bhkCompressedMeshShapeData::Chunk Materials</field>
         <field name="Reference" type="ushort" default="#USHRT_MAX#">Index of another chunk in the chunks list.</field>
         <field name="Transform Index" type="ushort">Index of transformation in bhkCompressedMeshShapeData::Chunk Transforms</field>
-        <field name="Num Vertices" type="uint">Number of vertices, multiplied by 3.</field>
-        <field name="Vertices" type="UshortVector3" length="Num Vertices #DIV# 3">Vertex positions in havok coordinates*1000.</field>
+        <field name="Num Vertices" type="uint" />
+        <field name="Vertices" type="ushort" length="Num Vertices" />
         <field name="Num Indices" type="uint" />
-        <field name="Indices" type="ushort" length="Num Indices">Vertex indices as used by strips.</field>
+        <field name="Indices" type="ushort" length="Num Indices" />
         <field name="Num Strips" type="uint" />
-        <field name="Strips" type="ushort" length="Num Strips">Length of strips longer than one triangle.</field>
-        <field name="Num Welding Info" type="uint">Generally the same as Num Indices field.</field>
-        <field name="Welding Info" type="bhkWeldInfo" length="Num Welding Info" />
+        <field name="Strips" type="ushort" length="Num Strips" />
+        <field name="Num Welding Info" type="uint" />
+        <field name="Welding Info" type="ushort" length="Num Welding Info" />
     </struct>
 
     <struct name="bhkMalleableConstraintCInfo" module="BSHavok" versions="#BETHESDA#">
@@ -2801,13 +2786,6 @@
         <field name="Stiff Spring" type="bhkStiffSpringConstraintCInfo" cond="Type == 8" />
         <field name="Malleable" type="bhkMalleableConstraintCInfo" cond="Type == 13" />
     </struct>
-
-    <!-- NIF Objects
-         These are the main units of data that NIF files are arranged in.
-         They are like C classes and can contain many pieces of data.
-         The only differences between these and structs is that these
-         are treated as object types by the NIF format and can inherit
-         from other classes.-->
 
     <niobject name="NiObject" abstract="true" module="NiMain">
         Abstract object type.
@@ -3206,6 +3184,15 @@
         A sphere.
     </niobject>
 
+    <niobject name="bhkCylinderShape" inherit="bhkConvexShape" module="BSHavok" versions="#BETHESDA#">
+        A cylinder.
+        <field name="Unused 01" type="byte" length="8" binary="true" />
+        <field name="Vertex A" type="Vector4" />
+        <field name="Vertex B" type="Vector4" />
+        <field name="Cylinder Radius" type="float" />
+        <field name="Unused 02" type="byte" length="12" binary="true" />
+    </niobject>
+
     <niobject name="bhkCapsuleShape" inherit="bhkConvexShape" module="BSHavok" versions="#BETHESDA#">
         A capsule.
         <field name="Unused 01" type="byte" length="8" binary="true" />
@@ -3213,15 +3200,6 @@
         <field name="Radius 1" type="float">Matches first capsule radius.</field>
         <field name="Second Point" type="Vector3">Second point on the capsule's axis.</field>
         <field name="Radius 2" type="float">Matches second capsule radius.</field>
-    </niobject>
-
-	<niobject name="bhkCylinderShape" inherit="bhkConvexShape" module="BSHavok" versions="#BETHESDA#">
-        A cylinder.
-        <field name="Unused 01" type="byte" length="8" binary="true" />
-        <field name="Vertex A" type="Vector4">Front end of the cylinder.</field>
-        <field name="Vertex B" type="Vector4">Rear end of the cylinder.</field>
-        <field name="Cylinder Radius" type="float">Matches first cylinder radius.</field>
-        <field name="Unused 02" type="byte" length="12" binary="true" />
     </niobject>
 
     <niobject name="bhkBoxShape" inherit="bhkConvexShape" module="BSHavok" versions="#BETHESDA#">
@@ -3279,11 +3257,9 @@
     <struct name="hkpMoppCode" module="BSHavok" versions="#BETHESDA#">
         <field name="Data Size" type="uint">Number of bytes for MOPP data.</field>
         <field name="Offset" type="Vector4" since="10.1.0.0">
-            XYZ: Origin of the object in mopp coordinates. This is the minimum of all vertices in the packed shape along each axis, minus the radius of the child bhkPackedNiTriStripsShape/
-                 bhkCompressedMeshShape.
+            XYZ: Origin of the object in mopp coordinates. This is the minimum of all vertices in the packed shape along each axis, minus 0.1.
             W: The scaling factor to quantize the MOPP: the quantization factor is equal to 256*256 divided by this number.
-               In Oblivion and Skyrim files, scale is taken equal to 256*256*254 / (size + 2 * radius) where size is the largest dimension of the bounding box of the packed shape,
-               and radius is the radius of the child bhkPackedNiTriStripsShape/bhkCompressedMeshShape.
+               In Oblivion files, scale is taken equal to 256*256*254 / (size + 0.2) where size is the largest dimension of the bounding box of the packed shape.
         </field>
         <field name="Build Type" type="hkMoppCodeBuildType" vercond="#BS_GT_FO3#">Tells if MOPP Data was organized into smaller chunks (PS3) or not (PC)</field>
         <field name="Data" type="byte" binary="true" length="Data Size">The tree of bounding volume data.</field>
@@ -3522,7 +3498,7 @@
         <field name="Bounding Volume" type="BoundingVolume" cond="Use ABV == 1" />
     </niobject>
 
-    <bitflags name="bhkCOFlags" storage="ushort" prefix="BHKCO" versions="#BETHESDA#" module="BSHavok">
+    <bitflags name="bhkCOFlags" storage="ushort" prefix="BHKCO" versions="#BETHESDA#">
         bhkNiCollisionObject flags.
         0x100 and 0x200 are only for bhkBlendCollisionObject
         <option bit="0" name="ACTIVE" />
@@ -3544,14 +3520,14 @@
         <field name="Flags" type="bhkCOFlags" default="1">
             OB-FO3: Add 0x28 (SET_LOCAL | USE_VEL) for ANIM_STATIC layer objects.
             Post-FO3: Always add 0x80 (SYNC_ON_UPDATE).
-            <default onlyT="bhkCollisionObject" value="0x81" />
-            <default onlyT="bhkCollisionObject" value="0x1" versions="V20_2_0_7_FO3 V20_0_0_5_OBL" />
-            <default onlyT="bhkPCollisionObject" value="0x81" />
-            <default onlyT="bhkPCollisionObject" value="0x1" versions="V20_2_0_7_FO3 V20_0_0_5_OBL" />
-            <default onlyT="bhkSPCollisionObject" value="0x81" />
-            <default onlyT="bhkSPCollisionObject" value="0x1" versions="V20_2_0_7_FO3 V20_0_0_5_OBL" />
-            <default onlyT="bhkBlendCollisionObject" value="0x89" />
-            <default onlyT="bhkBlendCollisionObject" value="0x9" versions="V20_2_0_7_FO3 V20_0_0_5_OBL" />
+            <default type="bhkCollisionObject" value="0x81" />
+            <default type="bhkCollisionObject" value="0x1" versions="V20_2_0_7_FO3 V20_0_0_5_OBL" />
+            <default type="bhkPCollisionObject" value="0x81" />
+            <default type="bhkPCollisionObject" value="0x1" versions="V20_2_0_7_FO3 V20_0_0_5_OBL" />
+            <default type="bhkSPCollisionObject" value="0x81" />
+            <default type="bhkSPCollisionObject" value="0x1" versions="V20_2_0_7_FO3 V20_0_0_5_OBL" />
+            <default type="bhkBlendCollisionObject" value="0x89" />
+            <default type="bhkBlendCollisionObject" value="0x9" versions="V20_2_0_7_FO3 V20_0_0_5_OBL" />
         </field>
         <field name="Body" type="Ref" template="bhkWorldObject" />
     </niobject>
@@ -3584,40 +3560,40 @@
             BSTreeNode: 0x8080E (pre-FO4), 0x400E (FO4)
             BSLeafAnimNode: 0x808000E (pre-FO4), 0x500E (FO4)
             BSDamageStage, BSBlastNode: 0x8000F (pre-FO4), 0x2000000F (FO4)
-            <default onlyT="NiNode" value="0xE" />
-            <default onlyT="NiNode" value="0x8000E" versions="V20_2_0_7_FO3" />
-            <default onlyT="NiLight" value="0xE" />
-            <default onlyT="NiLight" value="0x8000E" versions="V20_2_0_7_FO3" />
-            <default onlyT="BSMultiBoundNode" value="0xE" />
-            <default onlyT="BSMultiBoundNode" value="0x8080E" versions="V20_2_0_7_FO3" />
-            <default onlyT="BSTriShape" value="0xE" />
-            <default onlyT="BSTriShape" value="0x8000E" versions="V20_2_0_7_SSE" />
-            <default onlyT="BSSubIndexTriShape" value="0xE" />
-            <default onlyT="BSMeshLODTriShape" value="0x100E" />
-            <default onlyT="BSFadeNode" value="0x8000E" />
-            <default onlyT="NiParticleSystem" value="0x8000E" />
-            <default onlyT="BSMasterParticleSystem" value="0x8000E" />
-            <default onlyT="NiParticleSystem" value="0xE" versions="V20_2_0_7_FO4" />
-            <default onlyT="BSMasterParticleSystem" value="0xE" versions="V20_2_0_7_FO4" />
-            <default onlyT="BSStripParticleSystem" value="0x8000E" />
-            <default onlyT="NiTriShape" value="0x8000E" />
-            <default onlyT="NiTriStrips" value="0x8000E" />
-            <default onlyT="BSSegmentedTriShape" value="0xE" />
-            <default onlyT="BSSegmentedTriShape" value="0x8000E" versions="V20_2_0_7_FO3" />
-            <default onlyT="BSLeafAnimNode" value="0x808000E" />
-            <default onlyT="BSLeafAnimNode" value="0x500E" versions="V20_2_0_7_FO4" />
-            <default onlyT="BSTreeNode" value="0x8080E" />
-            <default onlyT="BSTreeNode" value="0x400E" versions="V20_2_0_7_FO4" />
-            <default onlyT="BSDebrisNode" value="0x8000F" />
-            <default onlyT="BSBlastNode" value="0x8000F" />
-            <default onlyT="BSBlastNode" value="0x2000000F" versions="V20_2_0_7_FO4" />
-            <default onlyT="BSDamageStage" value="0x8000F" />
-            <default onlyT="BSDamageStage" value="0x2000000F" versions="V20_2_0_7_FO4" />
-            <default onlyT="BSOrderedNode" value="0x8200E" />
-            <default onlyT="BSOrderedNode" value="0x200E" versions="V20_2_0_7_FO4" />
-            <default onlyT="BSOrderedNode" value="0x8000E" versions="V20_2_0_7_FO3" />
-            <default onlyT="BSLODTriShape" value="0x800000E" versions="V20_2_0_7_SSE" />
-            <default onlyT="BSLODTriShape" value="0x808000E" versions="V20_2_0_7_SKY" />
+            <default type="NiNode" value="0xE" />
+            <default type="NiNode" value="0x8000E" versions="V20_2_0_7_FO3" />
+            <default type="NiLight" value="0xE" />
+            <default type="NiLight" value="0x8000E" versions="V20_2_0_7_FO3" />
+            <default type="BSMultiBoundNode" value="0xE" />
+            <default type="BSMultiBoundNode" value="0x8080E" versions="V20_2_0_7_FO3" />
+            <default type="BSTriShape" value="0xE" />
+            <default type="BSTriShape" value="0x8000E" versions="V20_2_0_7_SSE" />
+            <default type="BSSubIndexTriShape" value="0xE" />
+            <default type="BSMeshLODTriShape" value="0x100E" />
+            <default type="BSFadeNode" value="0x8000E" />
+            <default type="NiParticleSystem" value="0x8000E" />
+            <default type="BSMasterParticleSystem" value="0x8000E" />
+            <default type="NiParticleSystem" value="0xE" versions="V20_2_0_7_FO4" />
+            <default type="BSMasterParticleSystem" value="0xE" versions="V20_2_0_7_FO4" />
+            <default type="BSStripParticleSystem" value="0x8000E" />
+            <default type="NiTriShape" value="0x8000E" />
+            <default type="NiTriStrips" value="0x8000E" />
+            <default type="BSSegmentedTriShape" value="0xE" />
+            <default type="BSSegmentedTriShape" value="0x8000E" versions="V20_2_0_7_FO3" />
+            <default type="BSLeafAnimNode" value="0x808000E" />
+            <default type="BSLeafAnimNode" value="0x500E" versions="V20_2_0_7_FO4" />
+            <default type="BSTreeNode" value="0x8080E" />
+            <default type="BSTreeNode" value="0x400E" versions="V20_2_0_7_FO4" />
+            <default type="BSDebrisNode" value="0x8000F" />
+            <default type="BSBlastNode" value="0x8000F" />
+            <default type="BSBlastNode" value="0x2000000F" versions="V20_2_0_7_FO4" />
+            <default type="BSDamageStage" value="0x8000F" />
+            <default type="BSDamageStage" value="0x2000000F" versions="V20_2_0_7_FO4" />
+            <default type="BSOrderedNode" value="0x8200E" />
+            <default type="BSOrderedNode" value="0x200E" versions="V20_2_0_7_FO4" />
+            <default type="BSOrderedNode" value="0x8000E" versions="V20_2_0_7_FO3" />
+            <default type="BSLODTriShape" value="0x800000E" versions="V20_2_0_7_SSE" />
+            <default type="BSLODTriShape" value="0x808000E" versions="V20_2_0_7_SKY" />
         </field>
         <field name="Flags" type="ushort" since="3.0" vercond="#BSVER# #LTE# 26">Basic flags for AV objects.</field>
         <field name="Translation" type="Vector3">The translation vector.</field>
@@ -3684,32 +3660,32 @@
         <field name="Name" type="string">Used to locate the modifier.</field>
         <field name="Order" type="NiPSysModifierOrder" default="ORDER_GENERAL">
             Modifier's priority in the particle modifier chain.
-            <default onlyT="NiPSysAgeDeathModifier" value="ORDER_KILLOLDPARTICLES" />
-            <default onlyT="NiPSysMeshEmitter" value="ORDER_EMITTER" />
-            <default onlyT="NiPSysVolumeEmitter" value="ORDER_EMITTER" />
-            <default onlyT="NiPSysSpawnModifier" value="ORDER_EMITTER" />
-            <default onlyT="NiPSysColorModifier" value="ORDER_GENERAL" />
-            <default onlyT="NiPSysGrowFadeModifier" value="ORDER_GENERAL" />
-            <default onlyT="NiPSysRotationModifier" value="ORDER_GENERAL" />
-            <default onlyT="NiPSysBombModifier" value="ORDER_FORCE" />
-            <default onlyT="NiPSysDragModifier" value="ORDER_FORCE" />
-            <default onlyT="NiPSysFieldModifier" value="ORDER_FORCE" />
-            <default onlyT="NiPSysGravityModifier" value="ORDER_FORCE" />
-            <default onlyT="NiPSysColliderManager" value="ORDER_COLLIDER" />
-            <default onlyT="NiPSysPositionModifier" value="ORDER_POS_UPDATE" />
-            <default onlyT="NiPSysMeshUpdateModifier" value="ORDER_POSTPOS_UPDATE" />
-            <default onlyT="NiPSysBoundUpdateModifier" value="ORDER_BOUND_UPDATE" />
-            <default onlyT="BSPSysInheritVelocityModifier" value="ORDER_EMITTER" />
-            <default onlyT="BSPSysScaleModifier" value="ORDER_GENERAL" />
-            <default onlyT="BSPSysSimpleColorModifier" value="ORDER_GENERAL" />
-            <default onlyT="BSPSysSubTexModifier" value="ORDER_GENERAL" />
-            <default onlyT="BSParentVelocityModifier" value="ORDER_GENERAL" />
-            <default onlyT="BSWindModifier" value="ORDER_FORCE" />
-            <default onlyT="BSPSysRecycleBoundModifier" value="ORDER_POSTPOS_UPDATE" />
-            <default onlyT="BSPSysLODModifier" value="ORDER_BSLOD" />
-            <default onlyT="BSPSysStripUpdateModifier" value="ORDER_FO3_BSSTRIPUPDATE" versions="V20_2_0_7_FO3" />
-            <default onlyT="BSPSysStripUpdateModifier" value="ORDER_SK_BSSTRIPUPDATE" versions="V20_2_0_7_SKY V20_2_0_7_SSE" />
-            <default onlyT="NiPSysPartSpawnModifier" value="ORDER_WORLDSHIFT_PARTSPAWN" />
+            <default type="NiPSysAgeDeathModifier" value="ORDER_KILLOLDPARTICLES" />
+            <default type="NiPSysMeshEmitter" value="ORDER_EMITTER" />
+            <default type="NiPSysVolumeEmitter" value="ORDER_EMITTER" />
+            <default type="NiPSysSpawnModifier" value="ORDER_EMITTER" />
+            <default type="NiPSysColorModifier" value="ORDER_GENERAL" />
+            <default type="NiPSysGrowFadeModifier" value="ORDER_GENERAL" />
+            <default type="NiPSysRotationModifier" value="ORDER_GENERAL" />
+            <default type="NiPSysBombModifier" value="ORDER_FORCE" />
+            <default type="NiPSysDragModifier" value="ORDER_FORCE" />
+            <default type="NiPSysFieldModifier" value="ORDER_FORCE" />
+            <default type="NiPSysGravityModifier" value="ORDER_FORCE" />
+            <default type="NiPSysColliderManager" value="ORDER_COLLIDER" />
+            <default type="NiPSysPositionModifier" value="ORDER_POS_UPDATE" />
+            <default type="NiPSysMeshUpdateModifier" value="ORDER_POSTPOS_UPDATE" />
+            <default type="NiPSysBoundUpdateModifier" value="ORDER_BOUND_UPDATE" />
+            <default type="BSPSysInheritVelocityModifier" value="ORDER_EMITTER" />
+            <default type="BSPSysScaleModifier" value="ORDER_GENERAL" />
+            <default type="BSPSysSimpleColorModifier" value="ORDER_GENERAL" />
+            <default type="BSPSysSubTexModifier" value="ORDER_GENERAL" />
+            <default type="BSParentVelocityModifier" value="ORDER_GENERAL" />
+            <default type="BSWindModifier" value="ORDER_FORCE" />
+            <default type="BSPSysRecycleBoundModifier" value="ORDER_POSTPOS_UPDATE" />
+            <default type="BSPSysLODModifier" value="ORDER_BSLOD" />
+            <default type="BSPSysStripUpdateModifier" value="ORDER_FO3_BSSTRIPUPDATE" versions="V20_2_0_7_FO3" />
+            <default type="BSPSysStripUpdateModifier" value="ORDER_SK_BSSTRIPUPDATE" versions="V20_2_0_7_SKY V20_2_0_7_SSE" />
+            <default type="NiPSysPartSpawnModifier" value="ORDER_WORLDSHIFT_PARTSPAWN" />
         </field>
         <field name="Target" type="Ptr" template="NiParticleSystem">NiParticleSystem parent of this modifier.</field>
         <field name="Active" type="bool" default="1">Whether or not the modifier is active.</field>
@@ -7675,15 +7651,15 @@
         <field name="Name" type="NiFixedString" />
         <field name="Type" type="PSForceType">
             The force type is set by each derived class and cannot be changed.
-            <default onlyT="NiPSBombForce" value="FORCE_BOMB" />
-            <default onlyT="NiPSDragForce" value="FORCE_DRAG" />
-            <default onlyT="NiPSAirFieldForce" value="FORCE_AIR_FIELD" />
-            <default onlyT="NiPSDragFieldForce" value="FORCE_DRAG_FIELD" />
-            <default onlyT="NiPSGravityFieldForce" value="FORCE_GRAVITY_FIELD" />
-            <default onlyT="NiPSRadialFieldForce" value="FORCE_RADIAL_FIELD" />
-            <default onlyT="NiPSTurbulenceFieldForce" value="FORCE_TURBULENCE_FIELD" />
-            <default onlyT="NiPSVortexFieldForce" value="FORCE_VORTEX_FIELD" />
-            <default onlyT="NiPSGravityForce" value="FORCE_GRAVITY" />
+            <default type="NiPSBombForce" value="FORCE_BOMB" />
+            <default type="NiPSDragForce" value="FORCE_DRAG" />
+            <default type="NiPSAirFieldForce" value="FORCE_AIR_FIELD" />
+            <default type="NiPSDragFieldForce" value="FORCE_DRAG_FIELD" />
+            <default type="NiPSGravityFieldForce" value="FORCE_GRAVITY_FIELD" />
+            <default type="NiPSRadialFieldForce" value="FORCE_RADIAL_FIELD" />
+            <default type="NiPSTurbulenceFieldForce" value="FORCE_TURBULENCE_FIELD" />
+            <default type="NiPSVortexFieldForce" value="FORCE_VORTEX_FIELD" />
+            <default type="NiPSGravityForce" value="FORCE_GRAVITY" />
         </field>
         <field name="Active" type="bool" />
     </niobject>
@@ -8255,7 +8231,7 @@
         <!--<option value="6" name="NONE" />-->
     </enum>
 
-    <enum name="bhkCMSMatType" storage="byte" prefix="CMS" module="BSHavok">
+    <enum name="bhkCMSMatType" storage="byte" prefix="CMS">
         hkpCompressedMeshShape::MaterialType
         <option value="1" name="SINGLE_VALUE_PER_CHUNK">Chunk builder makes sure that only chunks with the same material are created.</option>
         <!--<option value="2" name="ONE_BYTE_PER_TRIANGLE" />-->
@@ -8301,8 +8277,8 @@
         using the default values.
         Name should be 'INV' (without the quotes).
         For rotations, a short of "4712" appears as "4.712" but "959" appears as "0.959"  meshes\weapons\daedric\daedricbowskinned.nif
-        <field name="Rotation X" type="ushort" default="0"></field>
-        <field name="Rotation Y" type="ushort" default="0"></field>
+        <field name="Rotation X" type="ushort" default="4712"></field>
+        <field name="Rotation Y" type="ushort" default="6283"></field>
         <field name="Rotation Z" type="ushort" default="0"></field>
         <field name="Zoom" type="float" default="1.0">Zoom factor.</field>
     </niobject>
