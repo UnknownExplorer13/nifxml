@@ -252,6 +252,7 @@
     <verattr name="num" access="#VER#" index="0" />
     <verattr name="user" access="#USER#" index="1" />
     <verattr name="bsver" access="#BSVER#" index="2" />
+
     <!--Basic Types-->
 
     <basic name="uint64" integral="true" countable="true" size="8">
@@ -2295,9 +2296,9 @@
 		<field name="Unused W" type="uint" cond="(#ARG# #BITAND# 0x11) == 0x1" />
 		<field name="UV" type="HalfTexCoord" cond="(#ARG# #BITAND# 0x2) != 0" />
 		<field name="Normal" type="ByteVector3" cond="(#ARG# #BITAND# 0x8) != 0" />
-		<field name="Bitangent Y" type="normbyte" cond="(#ARG# #BITAND# 0x8) != 0" />
+		<field name="Bitangent Y" type="byte" cond="(#ARG# #BITAND# 0x8) != 0" />
 		<field name="Tangent" type="ByteVector3" cond="(#ARG# #BITAND# 0x18) == 0x18" />
-		<field name="Bitangent Z" type="normbyte" cond="(#ARG# #BITAND# 0x18) == 0x18" />
+		<field name="Bitangent Z" type="byte" cond="(#ARG# #BITAND# 0x18) == 0x18" />
 		<field name="Vertex Colors" type="ByteColor4" cond="(#ARG# #BITAND# 0x20) != 0" />
 		<field name="Bone Weights" type="hfloat" length="4" cond="(#ARG# #BITAND# 0x40) != 0" />
 		<field name="Bone Indices" type="byte" length="4" cond="(#ARG# #BITAND# 0x40) != 0" />
@@ -3753,7 +3754,7 @@
         <field name="Radius Variation" type="float" since="10.4.0.1">Particle Radius randomness.</field>
         <field name="Life Span" type="float">Duration until a particle dies.</field>
         <field name="Life Span Variation" type="float">Adds randomness to Life Span.</field>
-        <field name="Unknown QQSpeed Floats" type="float" length="2" since="20.2.4.7" until="20.2.4.7" >Both 1.0 in example nif.</field>																																
+        <field name="Unknown QQSpeed Floats" type="float" length="2" since="20.2.4.7" until="20.2.4.7" >Both 1.0 in example nif.</field>
     </niobject>
 
     <niobject name="NiPSysVolumeEmitter" abstract="true" inherit="NiPSysEmitter" module="NiParticle">
